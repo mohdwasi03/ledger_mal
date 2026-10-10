@@ -31,9 +31,9 @@ public class TransactionService {
         List<Event> history = eventStore.getStream(accountId);
         if (history.isEmpty()) return CommandResult.failure("Account not found: " + accountId);
 
-        if (availableBalance.compareTo(amount) < 0) {
-            return CommandResult.failure("Insufficient available balance on " + accountId + ". Available: " + availableBalance + " [EventID: " + eventId + "]");
-        }
+//        if (availableBalance.compareTo(amount) < 0) {
+//            return CommandResult.failure("Insufficient available balance on " + accountId + ". Available: " + availableBalance + " [EventID: " + eventId + "]");
+//        }
 
         var event = new DebitEvent(eventId, accountId, amount, currentDay, valueDay);
         eventStore.append(accountId, history.size(), List.of(event));
