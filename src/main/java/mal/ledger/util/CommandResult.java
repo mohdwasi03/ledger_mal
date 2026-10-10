@@ -1,4 +1,4 @@
-package mal.ledger.service;
+package mal.ledger.util;
 
 public record CommandResult(
         boolean success,
