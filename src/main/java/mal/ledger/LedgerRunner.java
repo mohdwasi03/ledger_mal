@@ -12,26 +12,8 @@ public class LedgerRunner {
     public static void main(String[] args) {
         EventStore eventStore = new EventStore();
         LedgerService ledger = new LedgerService(eventStore);
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("===  In-Memory Account Ledger  ===");
-//        System.out.println("Select execution mode:");
-//        System.out.println("  1. Run Automated 6-Day Simulation");
-//        System.out.println("  2. Enter Interactive Command Mode");
-//        System.out.print("Enter choice (1 or 2): ");
-//
-//        String choice = scanner.nextLine().trim();
-//
-//        if (choice.equals("1")) {
-//            System.out.println("\n=== Running Automated Bitemporal 6-Day Simulation ===");
-//            runAutomatedSimulation(ledger);
-//
-//        } else if (choice.equals("2")) {
-//            System.out.println("\n=== Entering Interactive Command Mode ===");
-//            runInteractiveMode(ledger);
-//        } else {
-//            System.out.println("Invalid choice. Exiting application.");
-//        }
+        System.out.println("===  In-Memory Account Ledger(testcase with failed event)  ===");
 
         runAutomatedSimulation(ledger);
 
@@ -101,52 +83,6 @@ public class LedgerRunner {
         ledger.printUserEventReplay("USER-1");
     }
 
-//    private static void runInteractiveMode(LedgerService ledger) {
-//        Scanner scanner = new Scanner(System.in);
-////        System.out.println("\nInteractive Commands:");
-////        System.out.println("  create <userId> <accountId> <AED|BHD> <bootstrapEventId>");
-////        System.out.println("  credit <accountId> <amount> <valueDay>");
-////        System.out.println("  debit <accountId> <amount> <valueDay>");
-////        System.out.println("  auth <accountId> <authId> <amount> <valueDay>");
-////        System.out.println("  settle <accountId> <authId> <amount> <valueDay>");
-////        System.out.println("  reverse <accountId> <targetEventId> <valueDay> <systemDay> <reason>");
-////        System.out.println("  advance");
-////        System.out.println("  user-replay <userId>");
-////        System.out.println("  exit");
-//
-//        while (true) {
-//            System.out.print("\n[Day " + ledger.getCurrentDay() + "] ledger> ");
-//            String line = scanner.nextLine().trim();
-//            if (line.equalsIgnoreCase("exit")) break;
-//            String[] parts = line.split("\\s+");
-//            if (parts.length == 0) continue;
-//
-//            try {
-//                switch (parts[0].toLowerCase()) {
-//                    case "advance" -> {
-//                        ledger.advanceDay();
-//                        System.out.println("Advanced system day to: " + ledger.getCurrentDay());
-//                    }
-//                    case "create" -> printRes(ledger.createAccount(parts[1], parts[2], Currency.valueOf(parts[3]), parts[4]));
-//                    case "user-replay" -> ledger.printUserEventReplay(parts[1]);
-//                    case "credit" -> printRes(ledger.credit(parts[1], new BigDecimal(parts[2]), Integer.parseInt(parts[3])));
-//                    case "debit" -> printRes(ledger.debit(parts[1], new BigDecimal(parts[2]), Integer.parseInt(parts[3])));
-//                    case "auth" -> printRes(ledger.authorizeHold(parts[1], parts[2], new BigDecimal(parts[3]), Integer.parseInt(parts[4])));
-//                    case "settle" -> printRes(ledger.settleHold(parts[1], parts[2], new BigDecimal(parts[3]), Integer.parseInt(parts[4])));
-//                    case "reverse" -> printRes(ledger.reverseTransaction(parts[1], parts[2], Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), parts[5]));
-//                    case "balance" -> {
-//                        // parts[1] = accountId, parts[2] = targetDay (optional, defaults to current day)
-//                        String accId = parts[1];
-//                        int day = parts.length > 2 ? Integer.parseInt(parts[2]) : ledger.getCurrentDay();
-//                        ledger.printDaySummary(accId, day);
-//                    }
-//                    default -> System.out.println("Unknown command. Try: create, credit, debit, auth, settle, reverse, advance, balance, user-replay, exit");
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Error executing command: " + e.getMessage());
-//            }
-//        }
-//    }
 
     private static void printRes(CommandResult res) {
         System.out.println((res.success() ? "  [SUCCESS] " : "  [ERROR] ") + res.message());
