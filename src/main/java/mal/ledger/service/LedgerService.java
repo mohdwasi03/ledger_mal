@@ -99,9 +99,9 @@ public class LedgerService {
         );
     }
 
-    public void capitalizeInterest(int day) {
+    public void capitalizeInterest() {
         accountService.validateSystemDay();
-        interestService.capitalizeInterest(day, accountService.getAccountCurrencies(), this::nextEventId);
+        interestService.capitalizeInterest(accountService.getAccountCurrencies(), this::nextEventId);
     }
 
     public void printUserEventReplay(String userId) {

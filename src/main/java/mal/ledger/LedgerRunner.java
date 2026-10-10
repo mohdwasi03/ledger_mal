@@ -74,7 +74,7 @@ public class LedgerRunner {
         System.out.println("\n--- DAY 6 ---");
         ledger.advanceDay();
         printRes(ledger.reverseTransaction("ACC-001", "E7", 2, 6, "Duplicate debit reversal"));
-        ledger.capitalizeInterest(6);
+        ledger.capitalizeInterest();
         ledger.endOfDayProcessing(6);
         ledger.printDaySummary("ACC-001", 6);
         ledger.printDaySummary("ACC-002", 6);

@@ -22,7 +22,7 @@ public class AdjustmentService {
 
         boolean targetExists = history.stream().anyMatch(e -> e.eventId().equals(targetEventId));
         if (!targetExists) {
-            return CommandResult.failure("Reversal failed: Target event " + targetEventId + " not found.");
+            return CommandResult.failure("Reversal failed: Target event " + targetEventId + " not found." + " [EventID: " + eventId + "]");
         }
 
         var event = new ReversalEvent(eventId, accountId, targetEventId, systemDay, valueDay, reason);
