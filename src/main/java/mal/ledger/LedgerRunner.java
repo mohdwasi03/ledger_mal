@@ -52,7 +52,8 @@ public class LedgerRunner {
         System.out.println("\n--- DAY 4 ---");
         ledger.advanceDay();
         printRes(ledger.settleHold("ACC-001", "Auth-A", new BigDecimal("185.00"), 4));
-        printRes(ledger.settleHold("ACC-001", "Auth-Z", new BigDecimal("180.00"), 4)); // Orphan rejection
+        printRes(ledger.settleHold("ACC-001", "Auth-Z", new BigDecimal("180.00"), 4));
+        printRes(ledger.debit("ACC-001", new BigDecimal("500.00"), 4));
         ledger.endOfDayProcessing(4);
         ledger.printDaySummary("ACC-001", 4);
         ledger.printDaySummary("ACC-002", 4);

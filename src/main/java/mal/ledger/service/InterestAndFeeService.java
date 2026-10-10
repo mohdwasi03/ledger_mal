@@ -75,6 +75,7 @@ public class InterestAndFeeService {
                 String eventId = idGenerator.get();
                 var interestEvent = new InterestEvent(eventId, accountId, totalInterest, 6);
                 eventStore.append(accountId, history.size(), List.of(interestEvent));
+                accumulatedInterest.put(accountId, BigDecimal.ZERO);
             }
         }
     }
