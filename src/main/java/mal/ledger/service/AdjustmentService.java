@@ -27,6 +27,6 @@ public class AdjustmentService {
 
         var event = new ReversalEvent(eventId, accountId, targetEventId, systemDay, valueDay, reason);
         eventStore.append(accountId, history.size(), List.of(event));
-        return CommandResult.success("Reversed transaction " + targetEventId + " with " + eventId + " [Reason: " + reason + "]");
+        return CommandResult.success("Reversed transaction " + targetEventId + " with [EventID: " + eventId + "]" + " [Reason: " + reason + "]");
     }
 }
