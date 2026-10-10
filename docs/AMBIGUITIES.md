@@ -29,3 +29,11 @@
 ### Resolution & Justification
 * **Expected Version Validation:** Every append operation to an account stream must supply the expected current version number of that stream.
 * **Concurrency Exception Rule:** If the event store detects that another transaction has advanced the stream version in the interim, the write is aborted and a `CONCURRENCY_EXCEPTION` is thrown. The calling service must re-read the latest state, re-validate business invariants, and retry. This avoids expensive database row-locking while guaranteeing total ordering per account.
+
+## Temporal Modeling: Simulation Days vs. Real-World Dates
+
+- **Context**: For the scope of this interview simulation, the ledger tracks time using an integer-based day counter (`int day`, starting at Day 1 and advancing via `ADVANCE_DAY`) rather than calendar dates.
+- **Rationale**: Using an integer day counter avoids calendar edge cases (leap years, varying month lengths, time zones, and daylight saving shifts) and makes interest accrual and fee calculation test assertions deterministic and simple.
+- **Real-World Production Consideration**: In a production-grade banking ledger, transactions require bi-temporal modeling using `java.time.Instant` or `java.time.LocalDate` with explicit time zones (e.g., UTC). Specifically:
+    1. **Effective Date / Value Date**: The business date the transaction applies to for interest and financial accounting.
+    2. **Recorded Timestamp**: The exact physical wall-clock timestamp (`Instant`) when the event was ingested into the append-only event store for auditability and compliance.
