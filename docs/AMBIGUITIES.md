@@ -20,3 +20,12 @@
 
 ## 4. Event Idempotency & Deduplication
 * **Rule:** Every incoming event must carry a globally unique `eventId`. If an event with an already-registered `eventId` is submitted, the engine rejects it as a duplicate (`DUPLICATE_EVENT_ERROR`) to prevent double-posting.
+
+## 5. Stream-Level Optimistic Locking
+
+### Problem Statement & Context
+* **Trigger Scenario:** Multiple concurrent threads or distributed worker nodes attempt to append new financial events (e.g., deposits, debits, settlements) to the exact same account stream simultaneously, risking race conditions and out-of-order execution.
+
+### Resolution & Justification
+* **Expected Version Validation:** Every append operation to an account stream must supply the expected current version number of that stream.
+* **Concurrency Exception Rule:** If the event store detects that another transaction has advanced the stream version in the interim, the write is aborted and a `CONCURRENCY_EXCEPTION` is thrown. The calling service must re-read the latest state, re-validate business invariants, and retry. This avoids expensive database row-locking while guaranteeing total ordering per account.
