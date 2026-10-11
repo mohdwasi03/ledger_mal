@@ -1,4 +1,6 @@
 #  In-Memory Account Ledger
+This application runs on java 27
+
 
 ---
 
